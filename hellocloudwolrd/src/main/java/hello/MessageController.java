@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = {"/hello"})
 public class MessageController {
-	
 	@GetMapping(
 		path = {"/{name}"},
 		produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -17,7 +16,7 @@ public class MessageController {
 			@PathVariable("name") String name) {
 		return new MessageBoundary("Hello " + name);
 	}
-	
+
 	@GetMapping(
 		produces = {MediaType.APPLICATION_JSON_VALUE})
 	public MessageBoundary sayHello () {
