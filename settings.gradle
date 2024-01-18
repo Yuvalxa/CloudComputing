@@ -1,7 +1,3 @@
 rootProject.name = '2024a.cloud'
 
-include 'hellocloudwolrd'
-include 'hellocloudworldconsumer'
-
-include 'helloreactiveworld'
 include 'helloreactiveworldwithmongodb'
