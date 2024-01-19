@@ -1,4 +1,4 @@
-package il.ac.afeka.usersservice;
+package il.ac.afeka.usersservice.logic;
 
 import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.stereotype.Service;
@@ -9,19 +9,18 @@ import reactor.core.publisher.Mono;
 @Service
 public class ReactiveUsersService implements UsersService {
 
-
 	@Override
-	public Flux<UserBoundary> getUsersbyDomain(String domain) {
+	public Flux<UserBoundary> getUsersByDomain(String domain) {
 		return null;
 	}
 
 	@Override
-	public Flux<UserBoundary> getUsersbyMinimumAge(String minimumAgeInYears) {
+	public Flux<UserBoundary> getUsersByMinimumAge(String minimumAgeInYears) {
 		return null;
 	}
 
 	@Override
-	public Flux<UserBoundary> getUsersbyLastname(String prefix) {
+	public Flux<UserBoundary> getUsersByLastname(String prefix) {
 		return null;
 	}
 
@@ -32,6 +31,16 @@ public class ReactiveUsersService implements UsersService {
 
 	@Override
 	public Flux<UserBoundary> getAll() {
+		return null;
+	}
+
+	@Override
+	public Mono<UserBoundary> GetUserByEmail(String email, String password) {
+		return null;
+	}
+
+	@Override
+	public Mono<UserBoundary> createUser(UserBoundary user) {
 		return null;
 	}
 }
