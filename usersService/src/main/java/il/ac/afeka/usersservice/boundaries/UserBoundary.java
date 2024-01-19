@@ -33,14 +33,6 @@ public class UserBoundary {
         return name;
     }
 
-    public String getFirstname() {
-        return this.name.getFirst();
-    }
-
-    public String getLastname() {
-        return this.name.getLast();
-    }
-
     public void setName(NameBoundary name) {
         this.name = name;
     }
