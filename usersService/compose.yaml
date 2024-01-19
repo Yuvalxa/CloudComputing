@@ -1,0 +1,9 @@
+services:
+  usersdb:
+    image: 'mongo:latest'
+    environment:
+      - 'MONGO_INITDB_DATABASE=users'
+      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+      - 'MONGO_INITDB_ROOT_USERNAME=root'
+    ports:
+      - '27017:27017'
