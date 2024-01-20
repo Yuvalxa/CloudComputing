@@ -16,7 +16,7 @@ public class EmailCheckerTests {
         String[] emails = {
             "user@example.com",
             "test.email@domain.co",
-            "demo.mail@domain.il"
+            "demo_mail@prefix.domain.il"
         };
         // when email is validated
         Stream<Boolean> resultStream = Arrays.stream(emails).map(EmailChecker::isValidEmail);
@@ -32,6 +32,7 @@ public class EmailCheckerTests {
                 "demo.mail.domain.il",
                 "user@.com",
                 "user@domain.",
+                "user@domain_com",
         };
         // when email is validated
         Stream<Boolean> resultStream = Arrays.stream(emails).map(EmailChecker::isValidEmail);
