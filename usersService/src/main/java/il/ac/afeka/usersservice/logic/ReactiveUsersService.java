@@ -8,39 +8,58 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class ReactiveUsersService implements UsersService {
+	private ReactiveUserCrud userCrud;
+
+	public ReactiveUsersService(ReactiveUserCrud userCrud) {
+		this.userCrud = userCrud;
+	}
 
 	@Override
 	public Flux<UserBoundary> getUsersByDomain(String domain) {
-		return null;
+		return this.userCrud
+				.findByEmailEndingWith(domain)
+				.map(UserBoundary::new);
 	}
 
 	@Override
-	public Flux<UserBoundary> getUsersByMinimumAge(String minimumAgeInYears) {
-		return null;
+	public Flux<UserBoundary> getUsersByMinimumAge(int minimumAgeInYears) {
+		return this.userCrud
+				.findAll()
+				.filter(user -> user.calculateAge() >= minimumAgeInYears)
+				.map(UserBoundary::new);
 	}
 
 	@Override
-	public Flux<UserBoundary> getUsersByLastname(String prefix) {
-		return null;
+	public Flux<UserBoundary> getUsersByLastname(String lastname) {
+		return userCrud
+				.findAllByLastname(lastname)
+				.map(UserBoundary::new);
 	}
 
 	@Override
 	public Mono<Void> deleteAll() {
-		return null;
+		return this.userCrud.deleteAll();
 	}
 
 	@Override
 	public Flux<UserBoundary> getAll() {
-		return null;
+		return userCrud
+				.findAll()
+				.map(UserBoundary::new);
 	}
 
 	@Override
 	public Mono<UserBoundary> GetUserByEmail(String email, String password) {
-		return null;
+		return userCrud
+				.findByEmailAndPassword(email, password)
+				.map(UserBoundary::new);
 	}
 
 	@Override
 	public Mono<UserBoundary> createUser(UserBoundary user) {
-		return null;
+		return Mono.just(user)
+				.map(UserBoundary::toEntity)
+				.flatMap(this.userCrud::save)
+				.map(UserBoundary::new);
 	}
 }

@@ -51,7 +51,7 @@ public class ReactiveUsersController {
 	private Flux<UserBoundary> getUsersByCriteria(String criteria, String value) {
 		return switch (criteria) {
 			case "byLastname" -> this.usersService.getUsersByLastname(value).log();
-			case "byMinimumAge" -> this.usersService.getUsersByMinimumAge(value).log();
+			case "byMinimumAge" -> this.usersService.getUsersByMinimumAge(Integer.parseInt(value)).log();
 			case "byDomain" -> this.usersService.getUsersByDomain(value).log();
 			default -> Flux.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found"));
 		};

@@ -61,6 +61,18 @@ public class UserBoundary {
         this.roles = roles;
     }
 
+    public UserEntity toEntity() {
+        UserEntity entity = new UserEntity();
+        entity.setEmail(this.getEmail());
+        entity.setFirstname(this.name.getFirst());
+        entity.setLastname(this.name.getLast());
+        entity.setBirthdate(this.getBirthDate());
+        entity.setRecruitDate(this.getRecruitDate());
+        entity.setRoles(this.getRoles());
+
+        return entity;
+    }
+
     @Override
     public String toString() {
         return "UserBoundary {" +
