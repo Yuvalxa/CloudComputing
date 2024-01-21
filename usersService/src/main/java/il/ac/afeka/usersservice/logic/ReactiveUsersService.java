@@ -13,22 +13,20 @@ public class ReactiveUsersService implements UsersService {
 	public Flux<UserBoundary> getUsersByDomain(String domain) {
 		return null;
 	}
-
 	@Override
 	public Flux<UserBoundary> getUsersByMinimumAge(String minimumAgeInYears) {
 		return null;
 	}
-
 	@Override
 	public Flux<UserBoundary> getUsersByLastname(String prefix) {
 		return null;
 	}
-
+	@Override
+	public Flux<UserBoundary> getUserByDepartmentIdAndValue(String departmentId) {return null;}
 	@Override
 	public Mono<Void> deleteAll() {
 		return null;
 	}
-
 	@Override
 	public Flux<UserBoundary> getAll() {
 		return null;

@@ -53,9 +53,17 @@ public class ReactiveUsersController {
 			case "byLastname" -> this.usersService.getUsersByLastname(value).log();
 			case "byMinimumAge" -> this.usersService.getUsersByMinimumAge(value).log();
 			case "byDomain" -> this.usersService.getUsersByDomain(value).log();
+			case "byDepartmentId&value" -> this.usersService.getUserByDepartmentIdAndValue(value).log();
 			default -> Flux.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found"));
 		};
 	}
+
+//	@PutMapping(path = "/{email}/department", consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public Mono<UserBoundary> linkUserToDepartment(
+//			@PathVariable("email") String email,
+//			@RequestBody Map<String, Object> requestBody) {
+//
+//	}
 
 	@DeleteMapping
 	public Mono<Void> deleteAll() {
