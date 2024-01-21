@@ -1,8 +1,8 @@
 package il.ac.afeka.usersservice.logic;
 
-import il.ac.afeka.usersservice.boundaries.NewUserBoundary;
 import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.stereotype.Service;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -29,7 +29,10 @@ public class ReactiveUsersService implements UsersService {
                 .map(UserBoundary::new);
     }
 
-    @Override
+	@Override
+	public Flux<UserBoundary> getUserByDepartmentIdAndValue(String departmentId) {return null;}
+
+	@Override
     public Flux<UserBoundary> getUsersByLastname(String lastname) {
         return userCrud
                 .findAllByLastname(lastname)
