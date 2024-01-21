@@ -2,6 +2,8 @@ package il.ac.afeka.usersservice.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateValidator {
@@ -18,5 +20,9 @@ public class DateValidator {
         } catch (ParseException | NullPointerException e) {
             return false;
         }
+    }
+
+    public static LocalDate dateParser(String date){
+        return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 }
