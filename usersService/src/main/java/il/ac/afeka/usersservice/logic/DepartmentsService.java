@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface DepartmentsService {
     public Flux<DepartmentBoundary>  getAll();
-    public Flux<DepartmentBoundary> getDepartmentById(String deptId);
+    public Mono<DepartmentBoundary> getDepartmentById(String deptId);
     public Mono<Void> deleteAll();
 
 }
