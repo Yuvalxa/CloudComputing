@@ -1,10 +1,13 @@
 package il.ac.afeka.usersservice.logic;
 
+import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
 import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.stereotype.Service;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 @Service
 public class ReactiveUsersService implements UsersService {
@@ -39,6 +42,11 @@ public class ReactiveUsersService implements UsersService {
 
 	@Override
 	public Mono<UserBoundary> createUser(UserBoundary user) {
+		return null;
+	}
+
+	@Override
+	public Mono<UserBoundary> linkUserToDepartment(String email, DepartmentBoundary departmentBoundaryJson) {
 		return null;
 	}
 }

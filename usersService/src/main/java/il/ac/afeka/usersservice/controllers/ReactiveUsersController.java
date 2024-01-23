@@ -1,5 +1,6 @@
 package il.ac.afeka.usersservice.controllers;
 
+import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
 import il.ac.afeka.usersservice.logic.UsersService;
 import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = {"/users"})
@@ -58,12 +61,15 @@ public class ReactiveUsersController {
 		};
 	}
 
-//	@PutMapping(path = "/{email}/department", consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public Mono<UserBoundary> linkUserToDepartment(
-//			@PathVariable("email") String email,
-//			@RequestBody Map<String, Object> requestBody) {
-//
-//	}
+	@PutMapping(path = "/{email}/department", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Mono<UserBoundary> linkUserToDepartment(
+			@PathVariable("email") String email,
+			@RequestBody DepartmentBoundary  department) {
+
+		return this.usersService
+				.linkUserToDepartment(email,department)
+				.log();
+	}
 
 	@DeleteMapping
 	public Mono<Void> deleteAll() {
