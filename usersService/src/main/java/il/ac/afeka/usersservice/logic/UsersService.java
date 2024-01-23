@@ -1,10 +1,13 @@
 package il.ac.afeka.usersservice.logic;
 
+import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
 import il.ac.afeka.usersservice.boundaries.NewUserBoundary;
 import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 public interface UsersService {
 	public Flux<UserBoundary> getUsersByDomain(String domain);
@@ -15,6 +18,8 @@ public interface UsersService {
 	public Flux<UserBoundary>  getAll();
 	public Mono<UserBoundary> GetUserByEmail(String email, String password);
 	public Mono<UserBoundary> createUser(UserBoundary user);
+	public Mono<UserBoundary> linkUserToDepartment(String email, DepartmentBoundary departmentBoundaryJson);
+//	Mono<UserBoundary> linkUserToDepartment(String email, String deptId);
 
 
 }
