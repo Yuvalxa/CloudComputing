@@ -4,11 +4,12 @@ import il.ac.afeka.usersservice.data.DepartmentEntity;
 
 public class DepartmentBoundary {
 
-    private String deptId ;
+    private String deptId;
     private String departmentName;
     private String creationDate;
 
-    public DepartmentBoundary(){}
+    public DepartmentBoundary() {
+    }
 
     public DepartmentBoundary(DepartmentEntity dep) {
         this.deptId = dep.getDeptId();
@@ -38,6 +39,15 @@ public class DepartmentBoundary {
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public DepartmentEntity toEntity() {
+        DepartmentEntity entity = new DepartmentEntity();
+        entity.setDeptId(this.getDeptId());
+        entity.setDepartmentName(this.getDepartmentName());
+        entity.setCreationDate(this.getCreationDate());
+
+        return entity;
     }
 
     @Override

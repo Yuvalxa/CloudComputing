@@ -1,6 +1,7 @@
 package il.ac.afeka.usersservice.logic;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
+import il.ac.afeka.usersservice.boundaries.NewDepartmentBoundary;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,20 +15,29 @@ public class ReactiveDepartmentsService implements DepartmentsService {
     }
 
     @Override
-        public Flux<DepartmentBoundary> getAll() {
-            return this.departmentCrud
-                    .findAll()
-                    .map(DepartmentBoundary::new);
-        }
-        @Override
-        public Mono<DepartmentBoundary> getDepartmentById(String id) {
-            return this.departmentCrud
-                    .findById(id)
-                    .map(DepartmentBoundary::new);
-        }
+    public Mono<DepartmentBoundary> createDepartment(NewDepartmentBoundary department) {
+        return Mono.just(department)
+                .map(NewDepartmentBoundary::toEntity)
+                .flatMap(this.departmentCrud::save)
+                .map(DepartmentBoundary::new);
+    }
 
-        @Override
-        public Mono<Void> deleteAll() {
-            return this.departmentCrud.deleteAll();
-        }
+    @Override
+    public Flux<DepartmentBoundary> getAll() {
+        return this.departmentCrud
+                .findAll()
+                .map(DepartmentBoundary::new);
+    }
+
+    @Override
+    public Mono<DepartmentBoundary> getDepartmentById(String id) {
+        return this.departmentCrud
+                .findById(id)
+                .map(DepartmentBoundary::new);
+    }
+
+    @Override
+    public Mono<Void> deleteAll() {
+        return this.departmentCrud.deleteAll();
+    }
 }

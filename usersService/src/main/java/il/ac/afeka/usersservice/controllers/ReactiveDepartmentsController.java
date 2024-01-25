@@ -1,11 +1,10 @@
 package il.ac.afeka.usersservice.controllers;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
+import il.ac.afeka.usersservice.boundaries.NewDepartmentBoundary;
 import il.ac.afeka.usersservice.logic.DepartmentsService;
-
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +17,13 @@ public class ReactiveDepartmentsController {
         this.departmentsService = departmentsService;
     }
 
+    @PostMapping(
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Mono<DepartmentBoundary> createDepartment(@RequestBody NewDepartmentBoundary department) {
+        return this.departmentsService.createDepartment(department).log();
+    }
+
     // Triggered when no parameters are provided
     @GetMapping(produces = {MediaType.TEXT_EVENT_STREAM_VALUE})
     public Flux<DepartmentBoundary> getAllDepartments() {
@@ -25,9 +31,9 @@ public class ReactiveDepartmentsController {
     }
 
     @GetMapping(path = {"/{id}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Mono<DepartmentBoundary> getDepartmentById (
+    public Mono<DepartmentBoundary> getDepartmentById(
             @PathVariable("id") String id) {
-      return this.departmentsService.getDepartmentById(id).log();
+        return this.departmentsService.getDepartmentById(id).log();
     }
 
     @DeleteMapping
