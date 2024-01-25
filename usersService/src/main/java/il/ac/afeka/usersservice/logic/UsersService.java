@@ -17,7 +17,7 @@ public interface UsersService {
 	public Mono<Void> deleteAll();
 	public Flux<UserBoundary>  getAll();
 	public Mono<UserBoundary> GetUserByEmail(String email, String password);
-	public Mono<UserBoundary> createUser(UserBoundary user);
+	public Mono<UserBoundary> createUser(NewUserBoundary user);
 	public Mono<UserBoundary> linkUserToDepartment(String email, DepartmentBoundary departmentBoundaryJson);
 //	Mono<UserBoundary> linkUserToDepartment(String email, String deptId);
 

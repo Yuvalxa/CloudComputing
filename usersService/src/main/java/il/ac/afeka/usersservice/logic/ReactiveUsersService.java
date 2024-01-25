@@ -1,6 +1,7 @@
 package il.ac.afeka.usersservice.logic;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
+import il.ac.afeka.usersservice.boundaries.NewUserBoundary;
 import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.stereotype.Service;
 

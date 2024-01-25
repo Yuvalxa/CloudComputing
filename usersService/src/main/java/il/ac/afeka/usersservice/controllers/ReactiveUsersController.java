@@ -1,6 +1,7 @@
 package il.ac.afeka.usersservice.controllers;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
+import il.ac.afeka.usersservice.boundaries.NewUserBoundary;
 import il.ac.afeka.usersservice.logic.UsersService;
 import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class ReactiveUsersController {
 	@PostMapping(
 			consumes = {MediaType.APPLICATION_JSON_VALUE},
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Mono<UserBoundary> createUser(@RequestBody UserBoundary user) {
+	public Mono<UserBoundary> createUser(@RequestBody NewUserBoundary user) {
 		return this.usersService.createUser(user).log();
 	}
 
@@ -54,7 +55,7 @@ public class ReactiveUsersController {
 	private Flux<UserBoundary> getUsersByCriteria(String criteria, String value) {
 		return switch (criteria) {
 			case "byLastname" -> this.usersService.getUsersByLastname(value).log();
-			case "byMinimumAge" -> this.usersService.getUsersByMinimumAge(value).log();
+			case "byMinimumAge" -> this.usersService.getUsersByMinimumAge(Integer.parseInt(value)).log();
 			case "byDomain" -> this.usersService.getUsersByDomain(value).log();
 			case "byDepartmentId&value" -> this.usersService.getUserByDepartmentIdAndValue(value).log();
 			default -> Flux.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found"));
