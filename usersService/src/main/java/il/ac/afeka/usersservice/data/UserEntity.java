@@ -1,8 +1,10 @@
 package il.ac.afeka.usersservice.data;
 
+import il.ac.afeka.usersservice.util.DateValidator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 @Document(collection = "users")
@@ -72,6 +74,10 @@ public class UserEntity {
 
     public void setRoles(String[] roles) {
         this.roles = roles;
+    }
+
+    public int calculateAge() {
+        return Long.valueOf(ChronoUnit.YEARS.between(DateValidator.dateParser(birthdate), LocalDate.now())).intValue();
     }
 
     @Override

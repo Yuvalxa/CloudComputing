@@ -2,8 +2,10 @@ package il.ac.afeka.usersservice.controllers;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
 import il.ac.afeka.usersservice.logic.DepartmentsService;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -23,7 +25,7 @@ public class ReactiveDepartmentsController {
     }
 
     @GetMapping(path = {"/{id}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Flux<DepartmentBoundary> getDepartmentById (
+    public Mono<DepartmentBoundary> getDepartmentById (
             @PathVariable("id") String id) {
       return this.departmentsService.getDepartmentById(id).log();
     }

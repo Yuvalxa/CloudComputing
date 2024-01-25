@@ -1,7 +1,6 @@
 package il.ac.afeka.usersservice.boundaries;
 
 import il.ac.afeka.usersservice.data.UserEntity;
-
 import java.util.Arrays;
 
 public class UserBoundary {
@@ -59,6 +58,18 @@ public class UserBoundary {
 
     public void setRoles(String[] roles) {
         this.roles = roles;
+    }
+
+    public UserEntity toEntity() {
+        UserEntity entity = new UserEntity();
+        entity.setEmail(this.getEmail());
+        entity.setFirstname(this.name.getFirst());
+        entity.setLastname(this.name.getLast());
+        entity.setBirthdate(this.getBirthDate());
+        entity.setRecruitDate(this.getRecruitDate());
+        entity.setRoles(this.getRoles());
+
+        return entity;
     }
 
     @Override

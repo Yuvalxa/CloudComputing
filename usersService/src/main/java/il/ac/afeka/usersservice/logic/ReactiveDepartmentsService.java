@@ -1,25 +1,33 @@
 package il.ac.afeka.usersservice.logic;
+
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
 import org.springframework.stereotype.Service;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 public class ReactiveDepartmentsService implements DepartmentsService {
-        @Override
+    private ReactiveDepartmentCrud departmentCrud;
+
+    public ReactiveDepartmentsService(ReactiveDepartmentCrud departmentCrud) {
+        this.departmentCrud = departmentCrud;
+    }
+
+    @Override
         public Flux<DepartmentBoundary> getAll() {
-            return null;
+            return this.departmentCrud
+                    .findAll()
+                    .map(DepartmentBoundary::new);
         }
         @Override
-        public Flux<DepartmentBoundary> getDepartmentById(String id) {
-            return null;
+        public Mono<DepartmentBoundary> getDepartmentById(String id) {
+            return this.departmentCrud
+                    .findById(id)
+                    .map(DepartmentBoundary::new);
         }
+
         @Override
         public Mono<Void> deleteAll() {
-            return null;
+            return this.departmentCrud.deleteAll();
         }
-
-
-
 }
