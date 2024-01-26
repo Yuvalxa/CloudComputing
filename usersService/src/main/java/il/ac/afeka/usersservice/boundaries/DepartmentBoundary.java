@@ -1,9 +1,9 @@
 package il.ac.afeka.usersservice.boundaries;
 
 import il.ac.afeka.usersservice.data.DepartmentEntity;
+import il.ac.afeka.usersservice.util.DateValidator;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class DepartmentBoundary {
 
@@ -44,21 +44,12 @@ public class DepartmentBoundary {
         this.creationDate = creationDate;
     }
 
-    public static String changeDateFormat(String inputDate) {
-        // Parse the input date string to a LocalDate object
-        LocalDate localDate = LocalDate.parse(inputDate, DateTimeFormatter.ISO_DATE);
-
-        // Format the LocalDate object to the desired output format
-        String outputDate = localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-
-        return outputDate;
-    }
 
     public DepartmentEntity toEntity() {
         DepartmentEntity entity = new DepartmentEntity();
         entity.setDeptId(this.getDeptId());
         entity.setDepartmentName(this.getDepartmentName());
-        entity.setCreationDate(changeDateFormat(LocalDate.now().toString()));
+        entity.setCreationDate(DateValidator.changeDateFormat(LocalDate.now().toString()));
 
         return entity;
     }
