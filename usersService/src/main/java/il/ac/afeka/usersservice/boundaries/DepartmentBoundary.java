@@ -2,6 +2,8 @@ package il.ac.afeka.usersservice.boundaries;
 
 import il.ac.afeka.usersservice.data.DepartmentEntity;
 
+import java.time.LocalDate;
+
 public class DepartmentBoundary {
 
     private String deptId;
@@ -45,7 +47,7 @@ public class DepartmentBoundary {
         DepartmentEntity entity = new DepartmentEntity();
         entity.setDeptId(this.getDeptId());
         entity.setDepartmentName(this.getDepartmentName());
-        entity.setCreationDate(this.getCreationDate());
+        entity.setCreationDate(LocalDate.parse("dd-MM-yyyy").toString());
 
         return entity;
     }
