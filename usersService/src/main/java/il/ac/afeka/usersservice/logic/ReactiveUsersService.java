@@ -9,7 +9,6 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
 @Service
 public class ReactiveUsersService implements UsersService {
@@ -37,8 +36,11 @@ public class ReactiveUsersService implements UsersService {
     }
 
     @Override
-    public Flux<UserBoundary> getUserByDepartmentIdAndValue(String departmentId) {
-        return null;
+    public Flux<UserBoundary> getUserByDepartmentId(String departmentId) {
+        return this.userCrud
+                .findAll()
+                .filter(user -> Arrays.asList(user.getRoles()).contains(departmentId))
+                .map(UserBoundary::new);
     }
 
     @Override
@@ -91,7 +93,5 @@ public class ReactiveUsersService implements UsersService {
                         .map(savedUser -> new UserBoundary(savedUser))
         );
     }
-
-
 
 }

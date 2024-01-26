@@ -55,7 +55,7 @@ public class ReactiveUsersController {
 			case "byLastname" -> this.usersService.getUsersByLastname(value).log();
 			case "byMinimumAge" -> this.usersService.getUsersByMinimumAge(Integer.parseInt(value)).log();
 			case "byDomain" -> this.usersService.getUsersByDomain(value).log();
-			case "byDepartmentId&value" -> this.usersService.getUserByDepartmentIdAndValue(value).log();
+			case "byDepartmentId" -> this.usersService.getUserByDepartmentId(value).log();
 			default -> Flux.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found"));
 		};
 	}
