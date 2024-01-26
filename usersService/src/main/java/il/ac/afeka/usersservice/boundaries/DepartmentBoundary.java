@@ -3,6 +3,7 @@ package il.ac.afeka.usersservice.boundaries;
 import il.ac.afeka.usersservice.data.DepartmentEntity;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DepartmentBoundary {
 
@@ -43,11 +44,21 @@ public class DepartmentBoundary {
         this.creationDate = creationDate;
     }
 
+    public static String changeDateFormat(String inputDate) {
+        // Parse the input date string to a LocalDate object
+        LocalDate localDate = LocalDate.parse(inputDate, DateTimeFormatter.ISO_DATE);
+
+        // Format the LocalDate object to the desired output format
+        String outputDate = localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        return outputDate;
+    }
+
     public DepartmentEntity toEntity() {
         DepartmentEntity entity = new DepartmentEntity();
         entity.setDeptId(this.getDeptId());
         entity.setDepartmentName(this.getDepartmentName());
-        entity.setCreationDate(LocalDate.parse("dd-MM-yyyy").toString());
+        entity.setCreationDate(changeDateFormat(LocalDate.now().toString()));
 
         return entity;
     }

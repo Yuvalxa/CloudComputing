@@ -36,4 +36,13 @@ public class DepartmentEntity {
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
+
+    @Override
+    public String toString() {
+        return "DepartmentEntity {" +
+                "deptId='" + deptId + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                '}';
+    }
 }
