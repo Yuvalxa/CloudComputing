@@ -21,5 +21,5 @@ public interface UsersService {
 
 	public Mono<UserBoundary> createUser(NewUserBoundary user);
 
-	public Mono<UserBoundary> linkUserToDepartment(String email, DepartmentIdBoundary departmentId);
+	public Mono<UserBoundary> linkUserToDepartment(String email, DepartmentWrapperBoundary department);
 }

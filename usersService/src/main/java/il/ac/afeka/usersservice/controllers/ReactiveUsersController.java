@@ -60,10 +60,10 @@ public class ReactiveUsersController {
 	@PutMapping(path = "/{email}/department", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<UserBoundary> linkUserToDepartment(
 			@PathVariable("email") String email,
-			@RequestBody DepartmentIdBoundary departmentId) {
+			@RequestBody DepartmentWrapperBoundary department) {
 
 		return this.usersService
-				.linkUserToDepartment(email,departmentId)
+				.linkUserToDepartment(email,department)
 				.log();
 	}
 
