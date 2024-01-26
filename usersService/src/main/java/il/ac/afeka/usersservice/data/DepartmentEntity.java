@@ -4,7 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "departments")
-
 public class DepartmentEntity {
     @Id
     private String deptId;

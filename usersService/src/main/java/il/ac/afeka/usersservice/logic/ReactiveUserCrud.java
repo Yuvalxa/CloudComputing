@@ -14,5 +14,4 @@ public interface ReactiveUserCrud extends ReactiveMongoRepository<UserEntity, St
 
 	Mono<UserEntity> findByEmailAndPassword( @Param("email") String email, @Param("password") String password );
 
-	Mono<UserEntity> findByEmail( @Param("email") String email);
 }

@@ -2,26 +2,26 @@ package il.ac.afeka.usersservice.boundaries;
 
 public class DepartmentIdBoundary {
 
-	private String depId ;
+	private String deptId;
 
 	public DepartmentIdBoundary() {}
 
-	public DepartmentIdBoundary(String depId) {
-		this.depId = depId;
+	public DepartmentIdBoundary(String deptId) {
+		this.deptId = deptId;
 	}
 
-	public String getDepId() {
-		return depId;
+	public String getDeptId() {
+		return deptId;
 	}
 
-	public void setDepId(String depId) {
-		this.depId = depId;
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
 	}
 
 	@Override
 	public String toString() {
 		return "DepartmentIdBoundary{" +
-				"depId='" + depId + '\'' +
+				"depId='" + deptId + '\'' +
 				'}';
 	}
 }

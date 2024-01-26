@@ -79,8 +79,8 @@ public class ReactiveUsersService implements UsersService {
 
     @Override
     public Mono<UserBoundary> linkUserToDepartment(String email, DepartmentIdBoundary departmentId) {
-        Mono<UserEntity> userMono = this.userCrud.findByEmail(email);
-        Mono<DepartmentEntity> departmentMono = this.departmentCrud.findById(departmentId.getDepId());
+        Mono<UserEntity> userMono = this.userCrud.findById(email);
+        Mono<DepartmentEntity> departmentMono = this.departmentCrud.findById(departmentId.getDeptId());
 
         return userMono.flatMap(user ->
                 departmentMono.flatMap(departmentEntity -> {
