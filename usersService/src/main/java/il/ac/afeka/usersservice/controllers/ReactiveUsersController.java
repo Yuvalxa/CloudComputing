@@ -1,9 +1,7 @@
 package il.ac.afeka.usersservice.controllers;
 
-import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
-import il.ac.afeka.usersservice.boundaries.NewUserBoundary;
+import il.ac.afeka.usersservice.boundaries.*;
 import il.ac.afeka.usersservice.logic.UsersService;
-import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -65,10 +63,10 @@ public class ReactiveUsersController {
 	@PutMapping(path = "/{email}/department", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Mono<UserBoundary> linkUserToDepartment(
 			@PathVariable("email") String email,
-			@RequestBody DepartmentBoundary  department) {
+			@RequestBody DepartmentIdBoundary departmentId) {
 
 		return this.usersService
-				.linkUserToDepartment(email,department)
+				.linkUserToDepartment(email,departmentId)
 				.log();
 	}
 
