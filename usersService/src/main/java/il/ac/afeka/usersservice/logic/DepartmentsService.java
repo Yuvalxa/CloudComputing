@@ -1,12 +1,11 @@
 package il.ac.afeka.usersservice.logic;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
-import il.ac.afeka.usersservice.boundaries.NewDepartmentBoundary;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface DepartmentsService {
-    public Mono<DepartmentBoundary> createDepartment(NewDepartmentBoundary department);
+    public Mono<DepartmentBoundary> createDepartment(DepartmentBoundary department);
 
     public Flux<DepartmentBoundary> getAll();
 

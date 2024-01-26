@@ -1,7 +1,6 @@
 package il.ac.afeka.usersservice.logic;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
-import il.ac.afeka.usersservice.boundaries.NewDepartmentBoundary;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,9 +14,9 @@ public class ReactiveDepartmentsService implements DepartmentsService {
     }
 
     @Override
-    public Mono<DepartmentBoundary> createDepartment(NewDepartmentBoundary department) {
+    public Mono<DepartmentBoundary> createDepartment(DepartmentBoundary department) {
         return Mono.just(department)
-                .map(NewDepartmentBoundary::toEntity)
+                .map(DepartmentBoundary::toEntity)
                 .flatMap(this.departmentCrud::save)
                 .map(DepartmentBoundary::new);
     }

@@ -1,7 +1,6 @@
 package il.ac.afeka.usersservice.controllers;
 
 import il.ac.afeka.usersservice.boundaries.DepartmentBoundary;
-import il.ac.afeka.usersservice.boundaries.NewDepartmentBoundary;
 import il.ac.afeka.usersservice.logic.DepartmentsService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ public class ReactiveDepartmentsController {
     @PostMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Mono<DepartmentBoundary> createDepartment(@RequestBody NewDepartmentBoundary department) {
+    public Mono<DepartmentBoundary> createDepartment(@RequestBody DepartmentBoundary department) {
         return this.departmentsService.createDepartment(department).log();
     }
 
