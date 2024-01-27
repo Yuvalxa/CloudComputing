@@ -1,10 +1,14 @@
 package il.ac.afeka.usersservice.boundaries;
 
+import il.ac.afeka.usersservice.util.StringChecker;
+import il.ac.afeka.usersservice.util.exceptions.InvalidInputException;
+
 public class NameBoundary {
     private String first;
     private String last;
 
-    public NameBoundary() {}
+    public NameBoundary() {
+    }
 
     public NameBoundary(String firstname, String lastname) {
         this.first = firstname;
@@ -16,7 +20,10 @@ public class NameBoundary {
     }
 
     public void setFirst(String first) {
-        this.first = first;
+        if (StringChecker.isValidUserName(first))
+            this.first = first;
+        else
+            throw new InvalidInputException("Invalid first name");
     }
 
     public String getLast() {
@@ -24,7 +31,10 @@ public class NameBoundary {
     }
 
     public void setLast(String last) {
-        this.last = last;
+        if (StringChecker.isValidUserName(last))
+            this.last = last;
+        else
+            throw new InvalidInputException("Invalid last name");
     }
 
     @Override
