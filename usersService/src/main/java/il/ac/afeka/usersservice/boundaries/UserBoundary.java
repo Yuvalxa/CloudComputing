@@ -1,7 +1,6 @@
 package il.ac.afeka.usersservice.boundaries;
 
 import il.ac.afeka.usersservice.data.UserEntity;
-
 import java.util.Arrays;
 
 public class UserBoundary {

@@ -22,7 +22,17 @@ public class DateValidator {
         }
     }
 
-    public static LocalDate dateParser(String date){
+    public static LocalDate dateParser(String date) {
         return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
+
+    public static String changeDateFormat(String inputDate) {
+        // Parse the input date string to a LocalDate object
+        LocalDate localDate = LocalDate.parse(inputDate, DateTimeFormatter.ISO_DATE);
+
+        // Format the LocalDate object to the desired output format
+        String outputDate = localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        return outputDate;
     }
 }

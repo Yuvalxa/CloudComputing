@@ -1,22 +1,25 @@
 package il.ac.afeka.usersservice.logic;
 
-import il.ac.afeka.usersservice.boundaries.NewUserBoundary;
-import il.ac.afeka.usersservice.boundaries.UserBoundary;
+import il.ac.afeka.usersservice.boundaries.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface UsersService {
-    public Flux<UserBoundary> getUsersByDomain(String domain);
+	public Flux<UserBoundary> getUsersByDomain(String domain);
 
-    public Flux<UserBoundary> getUsersByMinimumAge(int minimumAgeInYears);
+	public Flux<UserBoundary> getUsersByMinimumAge(int minimumAgeInYears);
 
-    public Flux<UserBoundary> getUsersByLastname(String lastName);
+	public Flux<UserBoundary> getUsersByLastname(String lastName);
 
-    public Mono<Void> deleteAll();
+	public Flux<UserBoundary> getUserByDepartmentId(String departmentId);
 
-    public Flux<UserBoundary> getAll();
+	public Mono<Void> deleteAll();
 
-    public Mono<UserBoundary> GetUserByEmail(String email, String password);
+	public Flux<UserBoundary>  getAll();
 
-    public Mono<UserBoundary> createUser(NewUserBoundary user);
+	public Mono<UserBoundary> GetUserByEmail(String email, String password);
+
+	public Mono<UserBoundary> createUser(NewUserBoundary user);
+
+	public Mono<UserBoundary> linkUserToDepartment(String email, DepartmentWrapperBoundary department);
 }

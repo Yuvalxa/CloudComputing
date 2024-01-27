@@ -13,4 +13,5 @@ public interface ReactiveUserCrud extends ReactiveMongoRepository<UserEntity, St
 	Flux<UserEntity> findAllByLastname( @Param("lastname") String lastname );
 
 	Mono<UserEntity> findByEmailAndPassword( @Param("email") String email, @Param("password") String password );
+
 }
