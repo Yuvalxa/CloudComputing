@@ -1,19 +1,21 @@
 package il.ac.afeka.usersservice.logic;
 
-import il.ac.afeka.usersservice.boundaries.*;
+import il.ac.afeka.usersservice.boundaries.DepartmentWrapperBoundary;
+import il.ac.afeka.usersservice.boundaries.NewUserBoundary;
+import il.ac.afeka.usersservice.boundaries.UserBoundary;
 import il.ac.afeka.usersservice.data.DepartmentEntity;
 import il.ac.afeka.usersservice.data.UserEntity;
+import il.ac.afeka.usersservice.util.PasswordManager;
+import il.ac.afeka.usersservice.util.exceptions.AlreadyExistsException;
+import il.ac.afeka.usersservice.util.exceptions.InvalidInputException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class ReactiveUsersService implements UsersService {
-    private ReactiveUserCrud userCrud;
-    private ReactiveDepartmentCrud departmentCrud;
+    private final ReactiveUserCrud userCrud;
+    private final ReactiveDepartmentCrud departmentCrud;
 
     public ReactiveUsersService(ReactiveUserCrud userCrud, ReactiveDepartmentCrud departmentCrud) {
         this.userCrud = userCrud;
@@ -23,7 +25,7 @@ public class ReactiveUsersService implements UsersService {
     @Override
     public Flux<UserBoundary> getUsersByDomain(String domain) {
         return this.userCrud
-                .findByEmailEndingWith(domain)
+                .findByEmailEndingWith("@" + domain)
                 .map(UserBoundary::new);
     }
 
@@ -39,7 +41,7 @@ public class ReactiveUsersService implements UsersService {
     public Flux<UserBoundary> getUserByDepartmentId(String departmentId) {
         return this.userCrud
                 .findAll()
-                .filter(user -> Arrays.asList(user.getRoles()).contains(departmentId))
+                .filter(user -> user.getRoles().contains(departmentId))
                 .map(UserBoundary::new);
     }
 
@@ -65,16 +67,30 @@ public class ReactiveUsersService implements UsersService {
     @Override
     public Mono<UserBoundary> GetUserByEmail(String email, String password) {
         return userCrud
-                .findByEmailAndPassword(email, password)
+                .findById(email)
+                .filter(user -> PasswordManager.verify(password, user.getPassword()))
                 .map(UserBoundary::new);
     }
 
     @Override
     public Mono<UserBoundary> createUser(NewUserBoundary user) {
-        return Mono.just(user)
-                .map(NewUserBoundary::toEntity)
-                .flatMap(this.userCrud::save)
-                .map(UserBoundary::new);
+        return userCrud.findById(user.getEmail())
+                .flatMap(existingUser ->
+                        // if user already exist -> throw an error
+                        Mono.<UserBoundary>error(new AlreadyExistsException("User already exists")))
+                .switchIfEmpty(
+                        // if user does not exist -> check if all provided roles are valid
+                        Flux.fromArray(user.getRoles())
+                                .flatMap(this.departmentCrud::existsByDepartmentNameIgnoreCase)
+                                .all(exists -> exists)
+                                .flatMap(allValid -> {
+                                    if (!allValid)
+                                        return Mono.error(new InvalidInputException("One or more invalid roles"));
+                                    else
+                                        // create and return new user if all roles are valid
+                                        return this.userCrud.save(user.toEntity()).map(UserBoundary::new);
+                                })
+                );
     }
 
     @Override
@@ -84,13 +100,10 @@ public class ReactiveUsersService implements UsersService {
 
         return userMono.flatMap(user ->
                 departmentMono.flatMap(departmentEntity -> {
-                            Set<String> rolesSet = new HashSet<>(Arrays.asList(user.getRoles())); // make it set to neglect duplicate
-                            rolesSet.add(departmentEntity.getDeptId()); //add new depID
-                            String[] updatedRoles = rolesSet.toArray(new String[0]); //make it string array
-                            user.setRoles(updatedRoles);
+                            user.addRole(departmentEntity.getDepartmentName());
                             return this.userCrud.save(user);
                         })
-                        .map(savedUser -> new UserBoundary(savedUser))
+                        .map(UserBoundary::new)
         );
     }
 

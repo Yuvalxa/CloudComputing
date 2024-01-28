@@ -14,7 +14,7 @@ public class PasswordManagerTests {
     public void encryptingPassword() {
         // given a password
         // when password is encrypted
-        String encrypted = PasswordManager.encryptPassword(PASSWORD);
+        String encrypted = PasswordManager.encrypt(PASSWORD);
         // then an encrypted password is returned
         assertThat(encrypted)
                 .isNotNull()
@@ -26,26 +26,26 @@ public class PasswordManagerTests {
     public void encryptingNull() {
         // given a null password
         // when password is encrypted
-        String encrypted = PasswordManager.encryptPassword(null);
+        String encrypted = PasswordManager.encrypt(null);
         // then null is returned
         assertThat(encrypted).isNull();
     }
 
     @Test
     public void acceptingCorrectPassword() {
-        String encrypted = PasswordManager.encryptPassword(PASSWORD);
+        String encrypted = PasswordManager.encrypt(PASSWORD);
         // given a correct plain password
         // when password is validated
         // then password is correct
-        assertTrue(PasswordManager.validatePassword(PASSWORD, encrypted));
+        assertTrue(PasswordManager.verify(PASSWORD, encrypted));
     }
 
     @Test
     public void rejectingWrongPassword() {
-        String encrypted = PasswordManager.encryptPassword(PASSWORD);
+        String encrypted = PasswordManager.encrypt(PASSWORD);
         // given an incorrect plain password
         // when password is validated
         // then password is incorrect
-        assertFalse(PasswordManager.validatePassword("invalidPassword", encrypted));
+        assertFalse(PasswordManager.verify("invalidPassword", encrypted));
     }
 }

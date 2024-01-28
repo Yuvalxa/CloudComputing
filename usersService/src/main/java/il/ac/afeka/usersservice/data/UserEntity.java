@@ -1,11 +1,14 @@
 package il.ac.afeka.usersservice.data;
 
-import il.ac.afeka.usersservice.util.DateValidator;
+import il.ac.afeka.usersservice.util.DateUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Document(collection = "users")
 public class UserEntity {
@@ -16,9 +19,10 @@ public class UserEntity {
     private String password;
     private String birthdate;
     private String recruitdate;
-    private String[] roles;
+    private Set<String> roles;
 
-    public UserEntity() {}
+    public UserEntity() {
+    }
 
     public String getEmail() {
         return email;
@@ -68,16 +72,24 @@ public class UserEntity {
         this.recruitdate = recruitdate;
     }
 
-    public String[] getRoles() {
+    public Set<String> getRoles() {
         return roles;
     }
 
     public void setRoles(String[] roles) {
+        this.roles = new HashSet<>(Arrays.stream(roles).toList());
+    }
+
+    public void setRoles(Set<String> roles) {
         this.roles = roles;
     }
 
+    public void addRole(String role) {
+        this.roles.add(role);
+    }
+
     public int calculateAge() {
-        return Long.valueOf(ChronoUnit.YEARS.between(DateValidator.dateParser(birthdate), LocalDate.now())).intValue();
+        return Long.valueOf(ChronoUnit.YEARS.between(DateUtils.parseDate(birthdate), LocalDate.now())).intValue();
     }
 
     @Override
@@ -89,7 +101,7 @@ public class UserEntity {
                 ", password='" + password + '\'' +
                 ", birthdate='" + birthdate + '\'' +
                 ", recruitdate='" + recruitdate + '\'' +
-                ", roles=" + Arrays.toString(roles) +
+                ", roles=" + roles +
                 '}';
     }
 }
